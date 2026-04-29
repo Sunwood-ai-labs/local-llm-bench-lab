@@ -1,0 +1,45 @@
+name: Benchmark report
+description: Share a reproducible local LLM benchmark result.
+title: "[Benchmark]: "
+labels:
+  - benchmark
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      description: Model name, quantization, and source.
+      placeholder: gemma4:e2b via Ollama
+    validations:
+      required: true
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime
+      description: Ollama, MLX VLM, llama.cpp, or another backend.
+      placeholder: Ollama 0.22.0
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware and OS
+      description: Chip, memory, macOS version, and relevant runtime settings.
+      placeholder: Apple M1 Max, 64GB unified memory, macOS 26.4.1
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command
+      description: The exact command or script invocation.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result summary
+      description: Prompt speed, generation speed, memory, load time, and caveats.
+    validations:
+      required: true

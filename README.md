@@ -1,31 +1,32 @@
+<p align="center">
+  <img src="docs/public/ogp.svg" alt="local-llm-bench-lab" width="720">
+</p>
+
 # local-llm-bench-lab
 
-Apple Silicon 上でローカルLLMを比較・高速化・再ベンチするための実験リポジトリです。
+Apple Silicon local LLM benchmark lab for recording repeatable model runs across Ollama, MLX VLM, and llama.cpp.
 
-Gemma 4 だけに閉じず、Ollama / MLX / llama.cpp など複数バックエンドと、今後追加する別モデルを同じ形式で記録できるようにします。
+<p>
+  <a href="README.ja.md">日本語</a> |
+  <a href="https://sunwood-ai-labs.github.io/local-llm-bench-lab/">Docs</a> |
+  <a href="https://github.com/Sunwood-ai-labs/local-llm-bench-lab">GitHub</a>
+</p>
 
-## 目的
+<p>
+  <a href="https://github.com/Sunwood-ai-labs/local-llm-bench-lab/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Sunwood-ai-labs/local-llm-bench-lab/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/Sunwood-ai-labs/local-llm-bench-lab/actions/workflows/deploy-docs.yml"><img alt="Docs" src="https://github.com/Sunwood-ai-labs/local-llm-bench-lab/actions/workflows/deploy-docs.yml/badge.svg"></a>
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-2f6f73"></a>
+</p>
 
-- ローカルLLMの速度、メモリ、ロード時間、コンテキスト設定を比較する。
-- モデルごとに一番速い実行構成を見つける。
-- バックエンド別の高速化設定を実測で残す。
-- ほかのモデルを追加しても同じ手順で再現できるようにする。
+## ✨ What This Is
 
-## ディレクトリ
+This repository keeps local LLM benchmark scripts, experiment reports, and lightweight result files in one reusable shape. It started with a Gemma 4 experiment on an Apple M1 Max machine, but the structure is intentionally model-agnostic so more Llama, Qwen, Phi, Mistral, or other local model runs can be added later.
 
-```text
-benchmarks/                         共通ベンチ結果置き場
-configs/                            モデル・バックエンド設定
-docs/                               調査メモ、設計メモ
-experiments/gemma4-2026-04-29/      今回のGemma 4実験ログ
-scripts/                            再利用できるベンチスクリプト
-tools/                              補助ツール
-artifacts/                          ローカル生成物置き場。重いものはgit管理外
-```
+The repo tracks reproducible scripts and compact benchmark artifacts. Large local model files, virtual environments, Hugging Face caches, raw logs, and full experiment backups stay outside Git through `.gitignore`.
 
-## セットアップ
+## 🚀 Quick Start
 
-Python:
+Set up Python helpers:
 
 ```sh
 python3 -m venv .venv
@@ -33,50 +34,104 @@ source .venv/bin/activate
 python3 -m pip install -r requirements.txt
 ```
 
-Ollama ベンチには `ollama`, `curl`, `jq` が必要です。MLX VLM は Apple Silicon / macOS 前提です。
-
-ローカル設定は `.env.example` を参考にし、必要なら `.env` を作って管理対象外で使います。
-
-## 初期収録
-
-今回の Gemma 4 実験を最初の experiment として取り込み済みです。
-
-- `experiments/gemma4-2026-04-29/reports/Gemma4_Local_LLM_Report_JA.md`
-- `experiments/gemma4-2026-04-29/reports/raw_setup_and_bench_log.md`
-- `experiments/gemma4-2026-04-29/benchmarks/`
-
-元の一時実験フォルダの完全コピーは `experiments/gemma4-2026-04-29/full-copy/` にローカルバックアップとして置いています。モデル本体、venv、Hugging Face cache もこの配下にありますが、重いので Git 管理対象外です。
-
-## よく使うコマンド
-
-Ollama:
+Run an Ollama benchmark:
 
 ```sh
 scripts/ollama_bench.sh gemma4:e2b
-scripts/ollama_bench.sh gemma4:e4b
-scripts/ollama_bench.sh gemma4:26b
-scripts/ollama_bench.sh gemma4:31b
 ```
 
-出力先はデフォルトで `benchmarks/` です。別の場所へ出したい場合は `OUT_DIR=...` を指定します。
-
-MLX VLM:
+Run an MLX VLM benchmark:
 
 ```sh
 scripts/mlx_vlm_bench.py \
   --model artifacts/models/mlx-community-gemma-4-e2b-it-4bit \
-  --out benchmarks/model-run.jsonl
+  --out benchmarks/mlx-vlm-run.jsonl
 ```
 
-MLX VLM server:
+Run an MLX VLM server benchmark:
 
 ```sh
 MODEL=artifacts/models/mlx-community-gemma-4-e2b-it-4bit \
 scripts/mlx_vlm_server_bench.sh
 ```
 
-`MODEL` は OpenAI compatible server に渡すモデル名またはローカルモデルパスです。
+Use `.env.example` as a reference for local settings. `.env` is intentionally ignored.
 
-## リポジトリ名の理由
+Launch the desktop speed lab:
 
-`local-llm-bench-lab` は、Gemma 固有ではなく、今後 Llama / Qwen / Phi / Mistral などを追加しても自然に使える名前です。`bench` は速度測定、`lab` は環境構築や高速化の実験も含むニュアンスにしています。
+```sh
+cd apps/llm-speed-desktop
+npm install
+npm run tauri dev
+```
+
+The Tauri app turns the report table into runnable presets for Ollama, MLX VLM server, and llama.cpp `llama-bench`.
+
+## 📊 First Experiment
+
+The initial dataset is under `experiments/gemma4-2026-04-29/`:
+
+- `reports/Gemma4_Local_LLM_Report_JA.md`: Japanese experiment report
+- `reports/raw_setup_and_bench_log.md`: setup and measurement notes
+- `benchmarks/`: JSONL, TSV, and compact JSON result files
+- `FULL_COPY.md`: notes about the local full-copy backup
+
+Representative result from the report:
+
+| Runtime | Model | Generation speed | Notes |
+|---|---:|---:|---|
+| Ollama | `gemma4:e2b` | ~70 tok/s | fastest daily-use path in the experiment |
+| Ollama | `gemma4:26b` | ~36 tok/s | larger sparse MoE, still practical |
+| MLX VLM server | E2B 4-bit | ~70-76 tok/s | persistent server with KV cache 8-bit |
+| llama.cpp | E4B GGUF | ~38.5 tok/s | Metal backend, close to Ollama E4B |
+
+See the full report for machine details, caveats, and raw command context.
+
+## 🧭 Repository Layout
+
+```text
+benchmarks/                         Cross-experiment summaries
+configs/                            Model and backend configuration notes
+docs/                               VitePress documentation site
+experiments/gemma4-2026-04-29/      Initial Gemma 4 experiment
+scripts/                            Reusable benchmark scripts
+tools/                              Helper utilities
+artifacts/                          Local generated assets, ignored when heavy
+apps/llm-speed-desktop/             Tauri desktop app for interactive speed checks
+```
+
+## 🛡 Data Policy
+
+Keep these out of Git:
+
+- model weights such as `.gguf`, `.safetensors`, `.bin`, `.pt`, `.onnx`
+- `models/`, `hf-cache/`, and local Hugging Face caches
+- Python virtual environments
+- runtime logs and temporary download chunks
+- `experiments/*/full-copy/`
+
+Track compact benchmark evidence instead: JSONL, TSV, small JSON summaries, reports, scripts, and reproducibility notes.
+
+## 📚 Documentation
+
+The documentation site lives in `docs/` and is published with GitHub Pages:
+
+```sh
+cd docs
+npm ci
+npm run docs:build
+```
+
+Local preview:
+
+```sh
+npm run docs:dev
+```
+
+## 🤝 Contributing
+
+Contributions are welcome when they keep benchmark runs reproducible and the repository lightweight. Start with `CONTRIBUTING.md`, use the issue templates for new benchmark reports, and avoid committing heavyweight model artifacts.
+
+## 📄 License
+
+This repository is released under the MIT License. See `LICENSE`.

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+  <title id="title">local-llm-bench-lab logo</title>
+  <desc id="desc">A geometric chip and benchmark bars icon.</desc>
+  <rect width="96" height="96" rx="20" fill="#f6f3ef"/>
+  <rect x="22" y="20" width="52" height="52" rx="12" fill="#2f6f73"/>
+  <path d="M18 34h8M18 48h8M18 62h8M70 34h8M70 48h8M70 62h8M34 16v8M48 16v8M62 16v8M34 70v8M48 70v8M62 70v8" stroke="#2f6f73" stroke-width="4" stroke-linecap="round"/>
+  <rect x="35" y="49" width="6" height="13" rx="2" fill="#f6f3ef"/>
+  <rect x="45" y="39" width="6" height="23" rx="2" fill="#f6f3ef"/>
+  <rect x="55" y="31" width="6" height="31" rx="2" fill="#f6f3ef"/>
+</svg>
