@@ -1,0 +1,10 @@
+Name: hf_transfer
+Version: 0.1.9
+Summary: Speed up file transfers with the Hugging Face Hub.
+Home-page: 
+Author: 
+Author-email: 
+License: 
+Location: /Users/admin/Prj/gemma4-local-experiment-20260429/.venv-mlx-vlm/lib/python3.9/site-packages
+Requires: 
+Required-by: 

@@ -1,0 +1,2 @@
+case	model	prompt_tokens	prompt_s	prompt_tok_s	eval_tokens	eval_s	eval_tok_s	load_s	total_s	done_reason
+short_chat_128_ctx4096	gemma4:e2b	34	0.675469625	50.335350016664336	98	12.165532131	8.055545696211519	3.569910833	16.680710875	stop

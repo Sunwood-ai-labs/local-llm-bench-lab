@@ -1,0 +1,39 @@
+.DS_Store
+
+# Python / local environments
+.venv/
+.venv-*/
+__pycache__/
+*.pyc
+.python-version
+
+# Local model caches and heavyweight artifacts
+models/
+hf-cache/
+artifacts/models/
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+*.mlpackage
+
+# Local full backups copied from experiment workspaces
+experiments/*/full-copy/
+
+# Runtime logs
+logs/
+*.log
+*.err
+*.out
+
+# Temporary benchmark output
+tmp/
+*.incomplete
+*.parts/
+
+# Secrets and local shell config
+.env
+.env.*
+!.env.example

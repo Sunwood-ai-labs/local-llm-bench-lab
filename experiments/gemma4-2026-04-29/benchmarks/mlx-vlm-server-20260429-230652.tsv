@@ -1,0 +1,3 @@
+case	model	prompt_tokens	prompt_tps	output_tokens	generation_tps	peak_memory_gb	wall_s
+short_chat_128	/Users/admin/Prj/gemma4-local-experiment-20260429/models/mlx-community-gemma-4-e2b-it-4bit	34	165.0500131162807	54	81.28057546650354	3.740173831	0.982389
+jp_long_512	/Users/admin/Prj/gemma4-local-experiment-20260429/models/mlx-community-gemma-4-e2b-it-4bit	51	355.22390922649953	512	70.76639073322903	3.740173831	7.464597
