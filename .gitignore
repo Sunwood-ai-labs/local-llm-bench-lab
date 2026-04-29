@@ -1,18 +1,45 @@
+# macOS / editor noise
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # Python / local environments
 .venv/
 .venv-*/
+venv/
+env/
 __pycache__/
-*.pyc
+*.py[cod]
 .python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+build/
+dist/
+*.egg-info/
+.ipynb_checkpoints/
 
 # Local model caches and heavyweight artifacts
 models/
-hf-cache/
 artifacts/models/
+artifacts/cache/
+artifacts/tmp/
+hf-cache/
+.huggingface/
+experiments/*/models/
+experiments/*/hf-cache/
+experiments/*/.venv*/
 *.gguf
 *.safetensors
+*.safetensors.index.json
 *.bin
 *.pt
 *.pth
@@ -24,14 +51,23 @@ experiments/*/full-copy/
 
 # Runtime logs
 logs/
+experiments/*/logs/
 *.log
 *.err
 *.out
+*.pid
+*.sock
 
-# Temporary benchmark output
+# Temporary benchmark and download output
 tmp/
+temp/
+benchmarks/tmp/
+experiments/*/benchmarks/tmp/
 *.incomplete
 *.parts/
+*.part
+*.download
+*.tmp
 
 # Secrets and local shell config
 .env
